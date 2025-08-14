@@ -1,5 +1,5 @@
 class Users::SessionsController < Devise::SessionsController
-  skip_before_action :verify_authenticity_token, only: [:send_otp, :verify_otp]
+  skip_before_action :verify_authenticity_token, only: [ :send_otp, :verify_otp ]
 
   def new
     # Step 1: Show email input
@@ -16,7 +16,7 @@ class Users::SessionsController < Devise::SessionsController
       # For testing: show in console
       Rails.logger.info "OTP is: #{otp}"
       OtpMailer.send_otp_email(user, otp).deliver_later
-      
+
       redirect_to otp_verify_path(email: user.email)
     else
       redirect_to new_user_session_path, alert: "Email not found."
