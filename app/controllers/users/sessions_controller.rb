@@ -2,7 +2,6 @@ class Users::SessionsController < Devise::SessionsController
   skip_before_action :verify_authenticity_token, only: [ :send_otp, :verify_otp ]
 
   def new
-    # Step 1: Show email input
     super
   end
 
@@ -10,7 +9,7 @@ class Users::SessionsController < Devise::SessionsController
     user = User.find_by(email: params[:user][:email])
 
     if user
-      otp = rand(100000..999999).to_s
+      otp = rand(1000..9999).to_s
       user.update(otp_code: otp, otp_sent_at: Time.current)
 
       # For testing: show in console
